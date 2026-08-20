@@ -4,10 +4,11 @@ Console.Write("Nombre del cajero: ");
 string  nombreCajero = Console.ReadLine();
 Console.WriteLine($"Bienvenida, {nombreCajero}. Caja abierta.");
 
-
+const decimal DescuentoAlto = 0.10m;  
+const decimal DescuentoMedio = 0.05m;
 
 // --- Etapa 3: carga de varios productos ---
-decimal total = 0;
+decimal subtotal = 0;
 int cantidadProductos = 0;
 int opcion;
 
@@ -31,7 +32,7 @@ do
 
             Console.WriteLine($"Producto cargado: {nombreProducto} - ${precio}");
             
-            total += precio;
+            subtotal += precio;
             cantidadProductos++;
             break;
         
@@ -46,9 +47,31 @@ do
 
     
 } while (opcion != 2);
+
+// --- Etapa 4: descuento según el total ---
+decimal porcentajeDescuento;
+
+if (subtotal > 50000)
+{
+    porcentajeDescuento = DescuentoAlto;
+}
+else if (subtotal > 20000)
+{
+    porcentajeDescuento = DescuentoMedio;
+}
+else
+{
+    porcentajeDescuento = 0m;
+}
+
+decimal descuento = subtotal * porcentajeDescuento;
+decimal totalConDescuento = subtotal - descuento;
+
 Console.WriteLine();
 Console.WriteLine($"Cantidad de productos: {cantidadProductos}");
-Console.WriteLine($"Total: ${total}");
+Console.WriteLine($"Subtotal: ${subtotal}");
+Console.WriteLine($"Descuento aplicado: ${descuento}");
+Console.WriteLine($"Total: ${totalConDescuento}");
 
 
 
