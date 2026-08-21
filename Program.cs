@@ -16,7 +16,7 @@ do
 {
     Console.WriteLine("¿Qué desea hacer?");
     Console.WriteLine(" 1- Cargar un producto");
-    Console.WriteLine(" 2- Cerra la venta");
+    Console.WriteLine(" 2- Cerrar la venta");
     Console.Write(" Opción: ");
     opcion = int.Parse(Console.ReadLine());
     
@@ -37,7 +37,7 @@ do
             break;
         
         case 2:
-            Console.WriteLine("Cerra la venta: ");
+            Console.WriteLine("Cerrar la venta: ");
             break;
         
         default:
@@ -67,11 +67,58 @@ else
 decimal descuento = subtotal * porcentajeDescuento;
 decimal totalConDescuento = subtotal - descuento;
 
+
+// --- Etapa 5: medio de pago ---
+const decimal DescuentoEfectivo = 0.10m;
+const decimal RecargoCredito = 0.15m;
+
+int opcionPago;
+bool opcionValida;
+
+do
+{
+    Console.WriteLine("Medio de pago: ");
+    Console.WriteLine("1 - Efectivo");
+    Console.WriteLine("2 - Débito");
+    Console.WriteLine("3 - Crédito ");
+    Console.Write(" Opción: ");
+    opcionPago = int.Parse(Console.ReadLine());
+
+    opcionValida = opcionPago == 1 || opcionPago == 2 || opcionPago == 3;
+    if (!opcionValida)
+    {
+        Console.WriteLine("Opción inválida. Intente de nuevo.");
+
+    }
+} 
+while (!opcionValida);
+
+decimal totalFinal = totalConDescuento;
+
+string nombreMedioPago = "";
+
+switch (opcionPago)
+{
+    case 1: 
+        totalFinal = totalConDescuento - (totalConDescuento * DescuentoEfectivo);
+        nombreMedioPago = "efectivo";
+        break;
+    case 2:
+        totalFinal = totalConDescuento;
+        nombreMedioPago = "débito";
+        break;
+    case 3:
+        totalFinal = totalConDescuento + (totalConDescuento * RecargoCredito);
+        nombreMedioPago = "credito";
+        break;
+}
 Console.WriteLine();
 Console.WriteLine($"Cantidad de productos: {cantidadProductos}");
 Console.WriteLine($"Subtotal: ${subtotal}");
 Console.WriteLine($"Descuento aplicado: ${descuento}");
-Console.WriteLine($"Total: ${totalConDescuento}");
+Console.WriteLine($"Total con descuento: ${totalConDescuento}");
+Console.WriteLine($"Total final ({ nombreMedioPago}): ${totalFinal}");
+
 
 
 
